@@ -1,0 +1,57 @@
+# Data Engineering Pipeline Configuration for Generative AI Fine-tuning
+
+# Data paths
+data:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  output_data_dir: "data/output"
+  sample_data_dir: "data/samples"
+
+# Pipeline settings
+pipeline:
+  # Data formats to support
+  supported_formats: ["json", "jsonl", "csv", "txt"]
+  
+  # Processing settings
+  batch_size: 1000
+  num_workers: 4
+  chunk_size: 10000
+  
+  # Quality thresholds
+  min_text_length: 10
+  max_text_length: 5000
+  min_quality_score: 0.7
+
+# Data transformation settings
+transformation:
+  # Format for fine-tuning (options: instruction, conversation, completion)
+  output_format: "instruction"
+  
+  # Instruction format settings
+  instruction_template:
+    system_prompt: "You are a helpful AI assistant."
+    instruction_prefix: "### Instruction:\n"
+    response_prefix: "### Response:\n"
+  
+  # Conversation format settings
+  conversation_template:
+    system_prompt: "You are a helpful AI assistant."
+    user_prefix: "User: "
+    assistant_prefix: "Assistant: "
+
+# Data validation
+validation:
+  required_fields: ["instruction", "response"]
+  check_duplicates: true
+  check_empty_fields: true
+  validate_format: true
+
+# Output settings
+output:
+  format: "jsonl"  # jsonl is standard for AI training
+  train_split: 0.9
+  val_split: 0.1
+  test_split: 0.0
+  shuffle: true
+  seed: 42
+
